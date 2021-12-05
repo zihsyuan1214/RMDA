@@ -1,3 +1,9 @@
+#This file provides a wrapper as an example on how to use RMDA.
+#In this example, we train sparse neural networks using either L1-regularization
+#(for unstructured sparsity considered in pruning) or group-LASSO regularization
+#(for structured sparsity that groups outgoing weights of each neuron
+#separately, and treats each channel in a convolutional layer as a group).
+
 import torch
 
 from RMDA.Optimizer.rmda import RMDA

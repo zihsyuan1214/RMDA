@@ -59,7 +59,7 @@ optimizer = train(training_dataloader=training_dataloader,
                   gamma=args.gamma,
                   gpu=args.gpu) 
 
-(loss, training_loss, grad_norm, 
+(training_loss, 
 validation_accuracy, training_accuracy,
 sparsity, group_sparsity) = Evaluation(training_dataloader=training_dataloader, 
                                        testing_dataloader=testing_dataloader, 
@@ -73,9 +73,7 @@ sparsity, group_sparsity) = Evaluation(training_dataloader=training_dataloader,
                                        gpu=args.gpu)
 
 print("----------Results----------")
-print("loss: {}".format(loss))
 print("training loss: {}".format(training_loss))
-print("grad norm: {}".format(grad_norm))
 print("validation accuracy: {}".format(validation_accuracy))
 print("training accuracy: {}".format(training_accuracy))
 print("sparsity: {}".format(sparsity))

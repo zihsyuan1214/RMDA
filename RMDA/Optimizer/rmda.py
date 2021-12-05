@@ -13,7 +13,7 @@ class RMDA(torch.optim.Optimizer):
         lambda_ (float): 
             regularization weight (default: 0.0).
         prox_fn (Callable):
-            proximal function with corresponding regularization (default: None).
+            proximal operator of the corresponding regularization (default: None).
     '''
     def __init__(self, params: Iterable[torch.nn.parameter.Parameter], 
                  lr: float = 1e-1, momentum: float = 1e-2, 

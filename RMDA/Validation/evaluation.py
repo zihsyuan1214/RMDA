@@ -14,7 +14,7 @@ def Evaluation(training_dataloader,
                gpu):
     model.eval()  
     
-    training_loss = 0.0
+    training_objective = 0.0
     training_accuracy = 0.0
     optimizer.zero_grad()
     for X, y in training_dataloader:
@@ -30,16 +30,15 @@ def Evaluation(training_dataloader,
         loss = criterion_sum(y_hat, y)
         loss.backward()
         y_hat = y_hat.argmax(dim=1)
-        training_loss += loss.item()
+        training_objective += loss.item()
         training_accuracy += y_hat.eq(y.view_as(y_hat)).float().sum().item() 
     with torch.no_grad():
         for p in model.parameters():
             p.grad.div_(len_training_dataset)
             
-    training_loss /= len_training_dataset
-    training_accuracy /= len_training_dataset 
+    training_objective /= len_training_dataset
+    training_accuracy /= len_training_dataset
         
-    loss = training_loss 
     
     if regularization == "Group LASSO":
         prox_fn = prox_glasso
@@ -48,28 +47,19 @@ def Evaluation(training_dataloader,
     else:
         raise ValueError('Unknown regularization '+regularization)
         
-    grad_norm = 0.0
-    with torch.no_grad():  
-        for p in model.parameters():
-            p.grad.neg_().add_(p)
-            prox_fn(p=p.grad, lambda_=lambda_, alpha=1.0)
-            p.grad.neg_().add_(p)
-            grad_norm += p.grad.square().sum().item()
-    grad_norm = grad_norm**0.5
-    
     if lambda_ != 0.0:
         for p in model.parameters():
             if regularization == "Group LASSO":
                 if p.ndim == 4 or p.ndim == 2:
                     reg_scaling = (p.numel()/p.shape[1])**0.5
                 if p.ndim == 4:
-                    training_loss += reg_scaling*lambda_*(torch.linalg.norm(p, dim=(0,2,3)).sum().item())
-                elif p.ndim == 2: 
-                    training_loss += reg_scaling*lambda_*(torch.linalg.norm(p, dim=(0)).sum().item())
+                    training_objective += reg_scaling*lambda_*(torch.linalg.norm(p, dim=(0,2,3)).sum().item())
+                elif p.ndim == 2:
+                    training_objective += reg_scaling*lambda_*(torch.linalg.norm(p, dim=(0)).sum().item())
                     
             elif regularization == "L1":
                 if p.ndim == 4 or p.ndim == 2:
-                    training_loss += lambda_*(p.abs().sum().item())
+                    training_objective += lambda_*(p.abs().sum().item())
                 
     validation_accuracy = 0.0
     with torch.no_grad():
@@ -100,4 +90,4 @@ def Evaluation(training_dataloader,
                 num_group += p.shape[1]            
     group_sparsity = 1.0-(num_nonsparse_group/num_group)
     
-    return loss, training_loss, grad_norm, validation_accuracy, training_accuracy, sparsity, group_sparsity
+    return training_objective, validation_accuracy, training_accuracy, sparsity, group_sparsity

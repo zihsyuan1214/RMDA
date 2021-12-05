@@ -207,9 +207,11 @@ class _ParamScheduler(object):
 
         self._last_momentum = [group['momentum'] for group in self.optimizer.param_groups]
         
-        '''restart the algorithm when the learning rate and momentum change,
-        that is, seting iteration ,accum and gradient buffer to zeros and 
-        updating initial point to the current point'''
+        """
+        Restart the algorithm when the learning rate and momentum change.
+        That is, setting iteration ,accum and gradient buffer to zeros, and 
+        updating the initial point to the current point
+        """
         if self.restart():
             for param_group in self.optimizer.param_groups:
                 param_group['iteration'] = 0
@@ -221,7 +223,8 @@ class _ParamScheduler(object):
         
         
 class MultiStepParam(_ParamScheduler):
-    """Decreases the learning rate and increases the momentum 
+    """
+    Decreases the learning rate and increases the momentum 
     of each parameter group by gamma once the number of epoch reaches one of the milestones.
     When learning rate and momentum change, algorithm must be restarted.
     Notice that such change can happen simultaneously with other changes to the learning rate 
