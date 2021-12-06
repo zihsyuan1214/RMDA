@@ -2,7 +2,7 @@ import torch
 
 from torch import Tensor
 
-# Group LASSO
+# Group LASSO regularization
 def prox_glasso(p: Tensor, lambda_: float, alpha: float):
     # reweight for group lasso
     if p.ndim == 4 or p.ndim == 2:
@@ -17,7 +17,7 @@ def prox_glasso(p: Tensor, lambda_: float, alpha: float):
         temp = torch.nn.functional.relu(torch.linalg.norm(p, dim=(0), keepdim=True).sub(lambda_alpha))
         p.mul_(temp.div(temp.add(lambda_alpha)))
         
-# L1         
+# L1 regularization         
 def prox_l1(p: Tensor, lambda_: float, alpha: float):
     if p.ndim == 4 or p.ndim == 2: 
         p_abs = p.abs()
