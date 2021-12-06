@@ -209,7 +209,7 @@ class _ParamScheduler(object):
         
         """
         Restart the algorithm when the learning rate and momentum change.
-        That is, setting iteration ,accum and gradient buffer to zeros, and 
+        That is, setting iteration, accum and gradient buffer to zeros, and 
         updating the initial point to the current point
         """
         if self.restart():
