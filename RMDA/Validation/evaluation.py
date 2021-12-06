@@ -16,25 +16,14 @@ def Evaluation(training_dataloader,
     
     training_objective = 0.0
     training_accuracy = 0.0
-    optimizer.zero_grad()
     for X, y in training_dataloader:
         if gpu:
             X, y = X.cuda(), y.cuda()
-        with torch.no_grad():
-            for p in model.parameters():
-                if p.grad.grad_fn is not None:
-                    p.grad.detach_()
-                else:
-                    p.grad.requires_grad_(False)
         y_hat = model(X)
         loss = criterion_sum(y_hat, y)
-        loss.backward()
         y_hat = y_hat.argmax(dim=1)
         training_objective += loss.item()
         training_accuracy += y_hat.eq(y.view_as(y_hat)).float().sum().item() 
-    with torch.no_grad():
-        for p in model.parameters():
-            p.grad.div_(len_training_dataset)
             
     training_objective /= len_training_dataset
     training_accuracy /= len_training_dataset
