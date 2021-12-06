@@ -41,7 +41,7 @@ def train(training_dataloader,
         lambda_ (float): 
             Regularization weight.
         regularization (str):
-            Type of regularization (Group LASSO of L1).
+            Type of regularization (Group LASSO or L1).
         milestones (list): 
             List of epoch indices.
         gamma (float):
