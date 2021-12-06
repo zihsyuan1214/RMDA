@@ -14,13 +14,41 @@ def train(training_dataloader,
           model, 
           criterion, 
           epochs: int, 
-          lr : float,
+          lr: float,
           momentum: float,
           lambda_: float,
-          regularization: str,
+          regularization: int,
           milestones: list,
           gamma: float,
-          gpu : bool = True):
+          gpu: bool = True):
+    '''
+    Arguments:
+        training_dataloader: 
+            Iterable over a training dataset.
+            https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader
+        model: 
+            Model to train.
+            https://pytorch.org/docs/stable/generated/torch.nn.Module.html
+        criterion: 
+            Loss function.
+            https://pytorch.org/docs/stable/nn.html#loss-functions
+        epochs (int): 
+            Number of epochs to train.
+        lr (float):   
+            Learning rate.
+        momentum (float):
+            Momentum value. 
+        lambda_ (float): 
+            Regularization weight.
+        regularization (str):
+            Type of regularization (Group LASSO of L1).
+        milestones (list): 
+            List of epoch indices.
+        gamma (float):
+            Factor of learning rate and momentum change.
+        gpu (bool):
+            whether to use gpu (default: True) 
+    '''
     if gpu:
         model.cuda()
 
@@ -53,5 +81,3 @@ def train(training_dataloader,
             optimizer.step()     
             
         scheduler.step()
-
-    return optimizer
