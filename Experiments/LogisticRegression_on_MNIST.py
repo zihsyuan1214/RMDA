@@ -47,33 +47,31 @@ with torch.no_grad():
     for p in model.parameters():
         p.zero_()
 
-optimizer = train(training_dataloader=training_dataloader, 
-                  model=model, 
-                  criterion=criterion_mean, 
-                  epochs=args.epochs, 
-                  lr=args.lr,
-                  momentum=args.momentum,
-                  lambda_=args.lambda_,
-                  regularization=args.regularization,
-                  milestones=args.milestones,
-                  gamma=args.gamma,
-                  gpu=args.gpu) 
+train(training_dataloader=training_dataloader, 
+      model=model, 
+      criterion=criterion_mean, 
+      epochs=args.epochs, 
+      lr=args.lr,
+      momentum=args.momentum,
+      lambda_=args.lambda_,
+      regularization=args.regularization,
+      milestones=args.milestones,
+      gamma=args.gamma,
+      gpu=args.gpu) 
 
-(training_loss, 
-validation_accuracy, training_accuracy,
+(training_objective, validation_accuracy, training_accuracy,
 sparsity, group_sparsity) = Evaluation(training_dataloader=training_dataloader, 
                                        testing_dataloader=testing_dataloader, 
                                        len_training_dataset=len(training_dataset),
                                        len_testing_dataset=len(testing_dataset), 
                                        model=model, 
-                                       optimizer=optimizer,
                                        criterion_sum=criterion_sum, 
                                        lambda_=args.lambda_, 
                                        regularization=args.regularization,
                                        gpu=args.gpu)
 
 print("----------Results----------")
-print("training loss: {}".format(training_loss))
+print("training objective: {}".format(training_objective))
 print("validation accuracy: {}".format(validation_accuracy))
 print("training accuracy: {}".format(training_accuracy))
 print("sparsity: {}".format(sparsity))
