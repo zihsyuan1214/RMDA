@@ -47,7 +47,7 @@ def train(training_dataloader,
         gamma (float):
             Factor of learning rate and momentum change.
         gpu (bool):
-            whether to use gpu (default: True) 
+            Whether to use gpu (default: True) 
     '''
     if gpu:
         model.cuda()
