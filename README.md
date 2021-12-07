@@ -1,7 +1,7 @@
 # Training Structured Neural Networks Through Manifold Identification and Variance Reduction
 
 This is the repository for the paper
-> Zih-Syuan Huang, Ching-pei Lee, *Training Structured Neural Networks Through Manifold Identification and Variance Reduction*
+> Zih-Syuan Huang, Ching-pei Lee, *Training Structured Neural Networks Through Manifold Identification and Variance Reduction*[[arXiv](https://arxiv.org/abs/2112.02612)]
 
 This repository contains:
  - Regularized modernized dual averaging ([RMDA](https://github.com/zihsyuan1214/rmda/blob/master/RMDA/Optimizer/rmda.py)) algorithm.
