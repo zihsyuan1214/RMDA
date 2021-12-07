@@ -15,14 +15,15 @@ def Evaluation(training_dataloader,
     
     training_objective = 0.0
     training_accuracy = 0.0
-    for X, y in training_dataloader:
-        if gpu:
-            X, y = X.cuda(), y.cuda()
-        y_hat = model(X)
-        loss = criterion_sum(y_hat, y)
-        y_hat = y_hat.argmax(dim=1)
-        training_objective += loss.item()
-        training_accuracy += y_hat.eq(y.view_as(y_hat)).float().sum().item() 
+    with torch.no_grad():
+        for X, y in training_dataloader:
+            if gpu:
+                X, y = X.cuda(), y.cuda()
+            y_hat = model(X)
+            loss = criterion_sum(y_hat, y)
+            y_hat = y_hat.argmax(dim=1)
+            training_objective += loss.item()
+            training_accuracy += y_hat.eq(y.view_as(y_hat)).float().sum().item() 
             
     training_objective /= len_training_dataset
     training_accuracy /= len_training_dataset
@@ -76,6 +77,6 @@ def Evaluation(training_dataloader,
             elif p.ndim == 2:
                 num_nonsparse_group += p.clone().detach().count_nonzero(dim=(0)).count_nonzero().item()
                 num_group += p.shape[1]            
-    group_sparsity = 1.0-(num_nonsparse_group/num_group)
+        group_sparsity = 1.0-(num_nonsparse_group/num_group)
     
     return training_objective, validation_accuracy, training_accuracy, sparsity, group_sparsity
