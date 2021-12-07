@@ -2,10 +2,10 @@ import torch
 import torchvision
 import argparse
 import sys 
-sys.path.append("..") 
-
+sys.path.append("..")
+ 
+from Models.logistic_regression import Lin
 from RMDA.Train import train
-from RMDA.Model.logistic_regression import Lin
 from RMDA.Validation.evaluation import Evaluation
 
 parser = argparse.ArgumentParser()
