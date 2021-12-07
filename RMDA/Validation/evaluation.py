@@ -78,5 +78,6 @@ def Evaluation(training_dataloader,
                 num_nonsparse_group += p.clone().detach().count_nonzero(dim=(0)).count_nonzero().item()
                 num_group += p.shape[1]            
         group_sparsity = 1.0-(num_nonsparse_group/num_group)
-    
+    else:
+        group_sparsity = 0.0
     return training_objective, validation_accuracy, training_accuracy, sparsity, group_sparsity
