@@ -55,7 +55,7 @@ def Evaluation(training_dataloader,
     for p in model.parameters():
         nonzero += p.clone().detach().count_nonzero().item()
         num_el += p.numel()
-    sparsity = 1.0-(nonzero/num_el)
+    unstructured_sparsity = 1.0-(nonzero/num_el)
     
     num_nonsparse_group = 0.0
     num_group = 0.0
@@ -67,8 +67,8 @@ def Evaluation(training_dataloader,
             elif p.ndim == 2:
                 num_nonsparse_group += p.clone().detach().count_nonzero(dim=(0)).count_nonzero().item()
                 num_group += p.shape[1]            
-        group_sparsity = 1.0-(num_nonsparse_group/num_group)
+        structured_sparsity = 1.0-(num_nonsparse_group/num_group)
     else:
-        group_sparsity = 0.0
+        structured_sparsity = 0.0
         
-    return training_objective, validation_accuracy, training_accuracy, sparsity, group_sparsity
+    return training_objective, training_accuracy, validation_accuracy, unstructured_sparsity, structured_sparsity
