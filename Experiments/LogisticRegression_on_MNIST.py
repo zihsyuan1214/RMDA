@@ -59,20 +59,20 @@ train(training_dataloader=training_dataloader,
       gamma=args.gamma,
       gpu=args.gpu) 
 
-(training_objective, validation_accuracy, training_accuracy,
-sparsity, group_sparsity) = Evaluation(training_dataloader=training_dataloader, 
-                                       testing_dataloader=testing_dataloader, 
-                                       len_training_dataset=len(training_dataset),
-                                       len_testing_dataset=len(testing_dataset), 
-                                       model=model, 
-                                       criterion_sum=criterion_sum, 
-                                       lambda_=args.lambda_, 
-                                       regularization=args.regularization,
-                                       gpu=args.gpu)
+(training_objective, training_accuracy, validation_accuracy, 
+unstructured_sparsity, structured_sparsity) = Evaluation(training_dataloader=training_dataloader, 
+                                                         testing_dataloader=testing_dataloader, 
+                                                         len_training_dataset=len(training_dataset),
+                                                         len_testing_dataset=len(testing_dataset), 
+                                                         model=model, 
+                                                         criterion_sum=criterion_sum, 
+                                                         lambda_=args.lambda_, 
+                                                         regularization=args.regularization,
+                                                         gpu=args.gpu)
 
 print("----------Results----------")
 print("training objective: {}".format(training_objective))
-print("validation accuracy: {}".format(validation_accuracy))
 print("training accuracy: {}".format(training_accuracy))
-print("sparsity: {}".format(sparsity))
-print("group sparsity: {}".format(group_sparsity))
+print("validation accuracy: {}".format(validation_accuracy))
+print("unstructured sparsity: {}".format(unstructured_sparsity))
+print("structured sparsity: {}".format(structured_sparsity))
