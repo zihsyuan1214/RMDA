@@ -1,6 +1,4 @@
 import torch
-
-from RMDA.ProxFn.prox_fns import prox_glasso, prox_l1
   
 def Evaluation(training_dataloader, 
                testing_dataloader,
@@ -27,14 +25,6 @@ def Evaluation(training_dataloader,
             
     training_objective /= len_training_dataset
     training_accuracy /= len_training_dataset
-        
-    
-    if regularization == "Group LASSO":
-        prox_fn = prox_glasso
-    elif regularization == "L1":
-        prox_fn = prox_l1    
-    else:
-        raise ValueError('Unknown regularization '+regularization)
         
     if lambda_ != 0.0:
         for p in model.parameters():
@@ -80,4 +70,5 @@ def Evaluation(training_dataloader,
         group_sparsity = 1.0-(num_nonsparse_group/num_group)
     else:
         group_sparsity = 0.0
+        
     return training_objective, validation_accuracy, training_accuracy, sparsity, group_sparsity
