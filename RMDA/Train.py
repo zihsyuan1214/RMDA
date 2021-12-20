@@ -52,7 +52,7 @@ def train(training_dataloader,
     if gpu:
         model.cuda()
 
-    if regularization == "Group LASSO":
+    if regularization == "Group_LASSO":
         prox_fn = prox_glasso
     elif regularization == "L1":
         prox_fn = prox_l1    
