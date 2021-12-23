@@ -28,7 +28,7 @@ def Evaluation(training_dataloader,
         
     if lambda_ != 0.0:
         for p in model.parameters():
-            if regularization == "Group LASSO":
+            if regularization == "Group_LASSO":
                 if p.ndim == 4 or p.ndim == 2:
                     reg_scaling = (p.numel()/p.shape[1])**0.5
                 if p.ndim == 4:
