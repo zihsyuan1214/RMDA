@@ -104,29 +104,3 @@ def ResNet101(num_classes):
 
 def ResNet152(num_classes):
     return ResNet(block=BottleNeck, num_block=[3, 8, 36, 3], num_classes=num_classes)
-
-'''
-resnet50_cifar10 = ResNet50(num_classes=10)
-torch.save(resnet50_cifar10.state_dict(), 'ResNet50_CIFAR10.pt')
-
-resnet50_cifar10_1 = ResNet50(num_classes=10)
-torch.save(resnet50_cifar10_1.state_dict(), 'ResNet50_CIFAR10_1.pt')
-
-resnet50_cifar10_2 = ResNet50(num_classes=10)
-torch.save(resnet50_cifar10_2.state_dict(), 'ResNet50_CIFAR10_2.pt')
-
-resnet50_cifar10_3 = ResNet50(num_classes=10)
-torch.save(resnet50_cifar10_3.state_dict(), 'ResNet50_CIFAR10_3.pt')
-
-resnet50_cifar100 = ResNet50(num_classes=100)
-torch.save(resnet50_cifar100.state_dict(), 'ResNet50_CIFAR100.pt')
-
-resnet50_cifar100_1 = ResNet50(num_classes=100)
-torch.save(resnet50_cifar100_1.state_dict(), 'ResNet50_CIFAR100_1.pt')
-
-resnet50_cifar100_2 = ResNet50(num_classes=100)
-torch.save(resnet50_cifar100_2.state_dict(), 'ResNet50_CIFAR100_2.pt')
-
-resnet50_cifar100_3 = ResNet50(num_classes=100)
-torch.save(resnet50_cifar100_3.state_dict(), 'ResNet50_CIFAR100_3.pt')
-'''
